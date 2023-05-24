@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>comunidad.png</file>
+    <file>manada.png</file>
+    <file>tropa.png</file>
+    <file>wak.png</file>
+    <file>trebol.png</file>
+  </qresource>
+</RCC>
