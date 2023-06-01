@@ -3,13 +3,8 @@
 Created on Tue May 23 16:40:36 2023
 
 @author: Irene
-"""
-"""
-Created on Wed Oct 26 20:16:47 2022
 
-@author: Irene Muñoz Castro
-
-Cifrado de clave Gato:
+Cifrado de clave China:
     
     Los caracteres que no son reconocidos se quedan como un espacio
     en blanco y como caracteres extra, además de las letras del abecedario,
@@ -33,21 +28,13 @@ def cerrar():
 def claveChina(Mensaje):
     
     turtle.title("Clave China")
-
-    #Arriba =    ["j","k","l","m","n","ñ","o","ó","p","q","r","s","t","u","ú","v","w","x","y","z"]
-    #Abajo =     ["a","á","b","c","d","e","é","f","g","h","i","í","j","k","l","m","n","ñ","o","ó","p","q"]
-    #Derecha =   ["a","á","b","c","d","e","é","f","j","k","l","m","n","ñ","r","s","t","u","ú","v","w"]
-    #Izquierda = ["d","e","é","f","g","h","i","í","m","n","ñ","o","ó","p","q","u","ú","v","w","x","y","z"]
-    #DotDer =    ["c","f","i","í","l","ñ","q","t","w","z"]
-    #DotIzq =    ["a","á","d","g","j","m","o","ó","r","u","ú","x"]
-    #DotC =      ["b","e","é","h","k","n","p","s","v","y"]
     
     ColA =      ["o","ó","ö","p","q","r","s","t","u","ú","ü","v","w","x","y","z"]
     ColE =      ["e","é","f","g","h","o","ó","ö","p","q","r","s","t","u","ú","ü","v","w","x","y","z","i","í","j","k","l","m","n","ñ",]
     ColI =      ["o","ó","ö","p","q","r","s","t","a","á","b","c","d","i","í","j","k","l","m","n","ñ","u","ú","ü","v","w","x","y","z"]
     ColO =      ["e","é","f","g","h","o","ó","ö","p","q","r","s","t","u","ú","ü","v","w","x","y","z","i","í","j","k","l","m","n","ñ",]
     ColU =      ["u","ú","ü","v","w","x","y","z"]
-    #fila1=      ["a","á","e","é","i","í","o","ó","ö","u","ú","ü"]
+
     Fila2=      ["n","t","z","ñ"]
     Fila3=      ["c","g","k","q","w","d","h","l","r","x","m","s","y","n","t","z","ñ"]
     Fila4=      ["b","f","j","p","v","c","g","k","q","w","d","h","l","r","x","m","s","y","n","t","z","ñ"]
@@ -82,26 +69,25 @@ def claveChina(Mensaje):
     def Guion(locx,locy,t):
         temp = t.pensize()
         draw.pensize(5*fontSize)
-        PenGoto((locx+10,locy+15*fontSize),t)
+        PenGoto((locx+2,locy+12),t)
         t.setheading(0)
-        t.forward(20*fontSize)
+        t.forward(15)
         draw.pensize(temp)
         
     def Comillas(locx,locy,t):
         temp = t.pensize()
-        PenGoto((locx+15,locy+25*fontSize),t)
-        draw.pensize(4*fontSize)
+        PenGoto((locx+5,locy+27),t)
         t.setheading(90-25)
-        t.forward(18*fontSize)
-        PenGoto((locx+20,locy+25*fontSize),t)
+        t.forward(12)
+        PenGoto((locx+10,locy+27),t)
         t.setheading(90-25)
-        t.forward(18*fontSize)
+        t.forward(12)
         draw.pensize(temp)
         
     def Punto(locx,locy,t):
         temp = t.pensize()
-        PenGoto((locx+25*fontSize,locy+5*fontSize),draw)
-        draw.pensize(12*fontSize)
+        PenGoto((locx+10,locy),draw)
+        draw.pensize(8)
         draw.forward(0.01)
         draw.pensize(temp)
         
@@ -252,5 +238,5 @@ def claveChina(Mensaje):
            
             
 #Mensaje = input("Introduce el mensaje para cifrar: ")
-#claveChina("ñ k skf ru fv.un ud d d u")
+#claveChina("ñ.ñ,ñ-ñ\"ñ")
 #turtle.reset()

@@ -23,8 +23,8 @@ from claves.parelinofu import claveParelinofu
 from claves.CifrarChina import claveChina
 #from claves.sietecruces import claveSieteCruces
 #from claves.musical import claveMusical
-#from claves.bailarin import claveBailarin
-#from claves.morse import claveMorseDibujo, claveMorseTexto
+from claves.CifrarBailarin import claveBailarin
+from claves.morse import claveMorseTexto#, claveMorseDibujo
 
 qtCreatorFile = "./GUI/Principal.ui" # Nombre del archivo del QtDesigner
 
@@ -79,7 +79,12 @@ class MyApp(QtWidgets.QMainWindow):
         elif self.rbtn_china.isChecked() == True:
             claveChina(orig)
             self.enClave.setText("En clave china, ver ventanita")
-        else:#clave gato
+        elif self.rbtn_morse.isChecked() == True:
+            #claveMorseDibujo(orig)
+            self.enClave.setText(claveMorseTexto(orig))
+        elif self.rbtn_bailarin.isChecked() == True:
+            claveBailarin(orig)
+        else:#claves que falten de programar
             self.enClave.setText("Aún no la he programado")
         
         '''
@@ -92,12 +97,9 @@ class MyApp(QtWidgets.QMainWindow):
         elif self.rbtn_musical.isChecked() == True:
             claveMusical(orig)
             self.enClave.setText("En clave musical, ver ventanita")
-        elif self.rbtn_bailarin.isChecked() == True:
-            claveBailarin(orig)
+        
             self.enClave.setText("En clave bailarín, ver ventanita")
-        elif self.rbtn_morse.isChecked() == True:
-            claveMorseDibujo(orig)
-            self.enClave.setText(claveMorseTexto(orig))
+        
         '''
 
     #_______________________________________________________________    

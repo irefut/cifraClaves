@@ -10,7 +10,7 @@ Cifrado de clave Gato:
     en blanco y como caracteres extra, además de las letras del abecedario,
     están incluidos:
     -el espacio ' ' como /
-    -las comillas '"'
+    -las comillas dobles '"'
     -el punto '.'
     -la coma ','
     -guión '-'
