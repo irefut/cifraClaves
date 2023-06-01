@@ -1,5 +1,7 @@
 # cifraClaves
-Cifrado de diferentes claves guías y scouts 
+___________________________________________________________
+Cifrado de diferentes claves guías y scouts con interfaz
+Usando python qt y la biblioteca turtle.
 
 Se encuentran las siguientes claves:
 
