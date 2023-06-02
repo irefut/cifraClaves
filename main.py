@@ -1,8 +1,10 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 """
 Created on Thu May 18 16:28:05 2023
 
 @author: Irene
+
+Versión 2.2
 """
 import sys
 from PyQt5 import QtWidgets

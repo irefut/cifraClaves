@@ -22,7 +22,7 @@ from claves.parelinofu import claveParelinofu
 #from claves.fonetica import claveFonetica
 from claves.CifrarChina import claveChina
 #from claves.sietecruces import claveSieteCruces
-#from claves.musical import claveMusical
+from claves.CifrarMusical import claveMusical
 from claves.CifrarBailarin import claveBailarin
 from claves.morse import claveMorseTexto#, claveMorseDibujo
 
@@ -84,6 +84,10 @@ class MyApp(QtWidgets.QMainWindow):
             self.enClave.setText(claveMorseTexto(orig))
         elif self.rbtn_bailarin.isChecked() == True:
             claveBailarin(orig)
+            self.enClave.setText("En clave bailarín, ver ventanita")
+        elif self.rbtn_musical.isChecked() == True:
+            claveMusical(orig)
+            self.enClave.setText("En clave musical, ver ventanita")
         else:#claves que falten de programar
             self.enClave.setText("Aún no la he programado")
         
@@ -94,11 +98,6 @@ class MyApp(QtWidgets.QMainWindow):
         elif self.rbtn_sietecruces.isChecked() == True:
             claveSieteCruces(orig)
             self.enClave.setText("En clave 7 cruces, ver ventanita")
-        elif self.rbtn_musical.isChecked() == True:
-            claveMusical(orig)
-            self.enClave.setText("En clave musical, ver ventanita")
-        
-            self.enClave.setText("En clave bailarín, ver ventanita")
         
         '''
 

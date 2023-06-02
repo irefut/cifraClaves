@@ -16,7 +16,7 @@ def cerrar():
     except turtle.Terminator:
         pass
 
-def claveBailarin(Mensaje):
+def claveMusical(Mensaje):
     
     turtle.title("Clave Musical")
     
@@ -476,4 +476,4 @@ def claveBailarin(Mensaje):
            
             
 #Mensaje = input("Introduce el mensaje para cifrar: ")
-claveBailarin("gru.po scout")
+#claveMusical("gru.po scout")
