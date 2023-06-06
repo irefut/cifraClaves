@@ -18,6 +18,6 @@ Se encuentran las siguientes claves:
   - Gato
   - China
   - Siete cruces (Aún no)
-  - Musical (Aún no)
+  - Musical
   - Bailarín 
   - Morse
