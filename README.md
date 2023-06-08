@@ -17,7 +17,7 @@ Se encuentran las siguientes claves:
   - Fonética (Aún no)
   - Gato
   - China
-  - Siete cruces (Aún no)
-  - Musical (Aún no)
+  - Siete cruces
+  - Musical 
   - Bailarín 
   - Morse
