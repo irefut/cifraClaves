@@ -21,7 +21,7 @@ from claves.neumatico import claveNeumatico
 from claves.parelinofu import claveParelinofu
 #from claves.fonetica import claveFonetica
 from claves.CifrarChina import claveChina
-from claves.CifrarSietecruces import claveSieteCruces
+from claves.CifarSieteCruces import claveSieteCruces
 from claves.CifrarMusical import claveMusical
 from claves.CifrarBailarin import claveBailarin
 from claves.morse import claveMorseTexto#, claveMorseDibujo
