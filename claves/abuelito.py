@@ -4,14 +4,19 @@ Created on Sat May 20 11:12:22 2023
 
 @author: Irene
 
-cifrando clave abuelito
+Cifrando clave abuelito:
+
+A  B  U  E  L  I  T  O
+|  |  |  |  |  |  |  |
+V  V  V  V  V  V  V  V
+1  2  3  4  5  6  7  8
 """
 def claveAbuelito(texto):
     longitud=len(texto) #Calculamos la longitud del texto para recorrerlo
     mensajecifrado = ""
     #print(longitud)
     #print("msj: "+ mensajecifrado)
-    print('HIPOTENUSA')
+    print('ABUELITO')
     print("msj entrada: "+texto)
     for i in range (0,longitud): #Bucle para recorrer el texto
         if texto[i] == " ":

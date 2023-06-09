@@ -7,6 +7,7 @@ Created on Thu Jun  1 14:35:56 2023
 Cifra clave morse
 
 Faltaría agregar la clave morse en el turtle.
+
 """
 def claveMorseTexto(texto):
     longitud=len(texto) #Calculamos la longitud del texto para recorrerlo
@@ -19,10 +20,12 @@ def claveMorseTexto(texto):
             mensajecifrado = mensajecifrado + "/"
         elif texto[i] == ",":
             mensajecifrado = mensajecifrado + ","
+        elif texto[i] == "/":
+            mensajecifrado = mensajecifrado + "\\"
         elif texto[i] == "\"":
             mensajecifrado = mensajecifrado + "\""
         elif texto[i] == "-":
-            mensajecifrado = mensajecifrado + "-"
+            mensajecifrado = mensajecifrado + "="
         elif texto[i] == ".":
             mensajecifrado = mensajecifrado + "//"
         elif texto[i] == "¿":
@@ -109,4 +112,4 @@ def claveMorseTexto(texto):
     return mensajecifrado
 
 #original = input("Introduce el mensaje para cifrar: ")
-morse = claveMorseTexto("abcde fj gh ijklminñ")
+#morse = claveMorseTexto("abcde fj gh ijklminñ")

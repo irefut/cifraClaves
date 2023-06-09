@@ -4,7 +4,7 @@ Created on Thu May 18 16:28:05 2023
 
 @author: Irene
 
-Versión 2.2
+Versión 3.0
 """
 import sys
 from PyQt5 import QtWidgets

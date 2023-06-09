@@ -6,6 +6,8 @@ Created on Tue May 23 16:40:36 2023
 
 Cifrado de clave China:
     
+    Ver: https://es.scribd.com/doc/310669075/Clave-China
+    
     Los caracteres que no son reconocidos se quedan como un espacio
     en blanco y como caracteres extra, además de las letras del abecedario,
     están incluidos:
@@ -15,6 +17,9 @@ Cifrado de clave China:
     -la coma ','
     -guión '-'
     
+    Incluye la Ñ
+    
+    PD: Se le podrían agregar los signos ¿?¡! más adelante
 """
 import turtle
 from turtle import Turtle
@@ -231,12 +236,11 @@ def claveChina(Mensaje):
         if x >= 300:
             x = -320
             y -= 110*fontSize
-    #turtle.done()
-    
+
     turtle.Screen._update = False  
     turtle.Screen.mainloop()
            
             
 #Mensaje = input("Introduce el mensaje para cifrar: ")
-#claveChina("ñ.ñ,ñ-ñ\"ñ")
+#claveChina("L-lBD  a, d. \" .ñ.ñ,ñ-ñ\"ñ")
 #turtle.reset()

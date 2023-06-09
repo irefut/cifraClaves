@@ -5,6 +5,8 @@ Created on Thu Jun  1 20:08:30 2023
 @author: Irene
 
 Codificando clave musical
+
+Si tiene Ñ
 """
 
 import turtle
@@ -29,13 +31,13 @@ def claveMusical(Mensaje):
     Siete =     ["7","g","o","ó","ö","x"]
     Ocho =      ["8","h","p","y"]
     Nueve =     ["9","i","í","q","z"]
+    
     Lleno =     ["r","s","t","u","ú","ü","v","w","x","y","z","1","2","3","4","5","6","7","8","9"]
     Vacio =     ["a","á","b","c","d","e","é","f","g","h","i","í","j","k","l","m","n","ñ","o","ó","ö","p","q"]
     Izq =       ["j","k","l","m","n","ñ","o","ó","ö","p","q","1","2","3","4","5","6","7","8","9"]
     Der =       ["a","á","b","c","d","e","é","f","g","h","i","í","r","s","t","u","ú","ü","v","w","x","y","z"]
     Arriba =    ["a","á","b","c","d","e","é","f","g","h","i","r","s","t","u","ú","ü","v","w","x","y","z"]
     Abajo =     ["j","k","l","m","n","ñ","o","ó","ö","p","q","1","2","3","4","5","6","7","8","9"]
-    
     
     fontSize = 0.5
     
@@ -50,26 +52,6 @@ def claveMusical(Mensaje):
         t.goto(loc)
         t.pendown()
         
-    def Guion(locx,locy,t):
-        temp = t.pensize()
-        draw.pensize(2.5)
-        PenGoto((locx-7,locy+15*fontSize),t)
-        t.setheading(0)
-        t.forward(15)
-        draw.pensize(temp)   
-       
-    def Comillas(locx,locy,t):
-        #Dibuja Comillas dobles
-        temp = t.pensize()
-        draw.pensize(2.5)
-        PenGoto((locx,locy+25),t)
-        t.setheading(90-25)
-        t.forward(18*fontSize)
-        PenGoto((locx+5,locy+25),t)
-        t.setheading(90-25)
-        t.forward(18*fontSize)
-        draw.pensize(temp)
-        
     def Punto(locx,locy,t):
         temp = t.pensize()
         draw.pensize(3)
@@ -77,38 +59,6 @@ def claveMusical(Mensaje):
         t.setheading(90)
         t.forward(49)
         draw.pensize(temp)
-        
-    def Coma(locx,locy,t):
-        temp = t.pensize()
-        PenGoto((locx,locy-20),draw)
-        draw.pensize(10*fontSize)
-        draw.forward(0.01)
-        t.setheading(90)
-        draw.pensize(9*fontSize)
-        draw.back(3)
-        t.setheading(90-20)
-        draw.pensize(7*fontSize)
-        draw.back(3)
-        t.setheading(90-35)
-        draw.pensize(5.5*fontSize)
-        draw.back(3)
-        t.setheading(90-60)
-        draw.pensize(4*fontSize)
-        draw.back(3)
-        draw.pensize(temp)
-    
-    def DDiagonal(locx,locy,t):
-        PenGoto((locx,locy),t)
-        t.setheading(90-30)
-        t.forward(44.72*fontSize)
-        PenGoto((locx+14*fontSize,locy),t)
-        t.setheading(90-30)
-        t.forward(44.72*fontSize)
-    ### este sería el punto    
-    def SDiagonal(locx,locy,t):
-        PenGoto((locx+8,locy),t)
-        t.setheading(90-30)
-        t.forward(44.72*fontSize)
         
     def Circle(locx,locy,t):
         temp = t.pensize()
@@ -396,9 +346,6 @@ def claveMusical(Mensaje):
         if "punto" in mode:
             Pentagrama(locx,locy,draw)
             Punto(locx,locy,draw)
-        
-        if "dobleDiagonal" in mode:
-            DDiagonal(locx,locy,draw)
         if "sol" in mode:
             SolN(locx,locy,draw)
     
@@ -422,13 +369,13 @@ def claveMusical(Mensaje):
             None
         mode = ""
         if i in ['"']:
-            Comillas(x,y,draw)
+            Pentagrama(x,y,draw)
         if i in ['.']:
             mode += "punto"
         if i in [',']:
-            Coma(x,y,draw)
+            Pentagrama(x,y,draw)
         if i in ["-"]:
-            Guion(x,y,draw)
+            Pentagrama(x,y,draw)
         if i in [" "]:
             Pentagrama(x,y,draw)
         if i in Vacio:
@@ -468,12 +415,11 @@ def claveMusical(Mensaje):
         if x >= 300:
             x = -320
             y -= 160*fontSize
-    #turtle.clearstamps()
-    #turtle.done()
+
     turtle.Screen._update = False  
     turtle.Screen.mainloop()
     turtle.Screen().exitonclick()
            
             
 #Mensaje = input("Introduce el mensaje para cifrar: ")
-#claveMusical("gru.po scout")
+#claveMusical("ñ")

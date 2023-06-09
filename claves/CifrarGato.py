@@ -214,12 +214,11 @@ def claveGato(Mensaje):
         if x >= 300:
             x = -320
             y -= 60*fontSize
-    #turtle.clearstamps()
-    #turtle.done()
+
     turtle.Screen._update = False  
     turtle.Screen.mainloop()
     turtle.Screen().exitonclick()
            
             
 #Mensaje = input("Introduce el mensaje para cifrar: ")
-#claveGato("Mensaje")
+#claveGato("L-lBD  a, d. \" .ñ.ñ,ñ-ñ\"ñ")

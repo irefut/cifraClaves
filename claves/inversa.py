@@ -3,6 +3,16 @@
 Created on Thu May 18 17:32:17 2023
 
 @author: Irene
+
+Cifrado clave Inversa:
+    
+    Escribimos abecedario al derecho y abajo al revés, quedaría algo así
+    
+    A  B  C  ... X  Y  Z
+    ^  ^  ^      ^  ^  ^
+    |  |  |  ... |  |  |
+    V  V  V      V  V  V 
+    Z  Y  X  ... C  B  A
 """
 def claveABC(texto):
     longitud=len(texto) #Calculamos la longitud del texto para recorrerlo

@@ -3,6 +3,15 @@
 Created on Thu May 18 17:45:32 2023
 
 @author: Irene
+
+Cifrado clave Malespín:
+    
+    P  I  T  A
+    ^  ^  ^  ^
+    |  |  |  |
+    V  V  V  V
+    M  O  B  E
+    
 """
 def claveMalespin(texto):
     longitud=len(texto) #Calculamos la longitud del texto para recorrerlo

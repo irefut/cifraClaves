@@ -4,7 +4,10 @@ Created on Wed Jun  7 23:28:27 2023
 
 @author: Irene
 
-Cifrar clave siete cruces
+Cifrar clave siete cruces:
+
+Llena espacios de 7 X arriba(v), derecha(<), abajo(^), izquierda(>) 
+con el abecedario terminando con espacio, incluye la Ñ.
 """
 
 import turtle
@@ -19,8 +22,6 @@ def cerrar():
 def claveSieteCruces(Mensaje):
     
     turtle.title("Clave Siete Cruces")
-    
-    #todo abcdario ["a","á","b","c","d","e","é","f","g","h","i","í","j","k","l""m","n","ñ","o","ó","ö","p","q","r","s","t","u","ú","ü","v","w","x","y","z"]
 
     Arriba =    ["a","á","e","é","i","í","m","p","t","x"]
     Derecha =   ["b","f","j","n","q","u","ú","ü","y"]
@@ -120,14 +121,6 @@ def claveSieteCruces(Mensaje):
         draw.pensize(4*fontSize)
         draw.back(3)
         draw.pensize(temp)
-    
-    def DDiagonal(locx,locy,t):
-        PenGoto((locx,locy),t)
-        t.setheading(90-30)
-        t.forward(44.72*fontSize)
-        PenGoto((locx+14*fontSize,locy),t)
-        t.setheading(90-30)
-        t.forward(44.72*fontSize)
         
     def SDiagonal(locx,locy,t):
         PenGoto((locx+15,locy-8),t)
@@ -246,12 +239,10 @@ def claveSieteCruces(Mensaje):
             tempy = locy-15
         if "arriba" in mode:
             Top(locx,locy,draw)
-        if "dobleDiagonal" in mode:
-            DDiagonal(locx,locy,draw)
         if "simpleDiagonal" in mode:
             SDiagonal(locx,locy,draw)
         if "flecha" in mode:
-            Flecha(locx+25,locy+5,draw)
+            Flecha(locx+25,locy,draw)
         if "uno" in mode:
             One(tempx,tempy,draw)
         if "dos" in mode:
@@ -322,8 +313,7 @@ def claveSieteCruces(Mensaje):
         if x >= 300:
             x = -320
             y -= 60*fontSize
-    #turtle.clearstamps()
-    #turtle.done()
+            
     turtle.Screen._update = False  
     turtle.Screen.mainloop()
     turtle.Screen().exitonclick()

@@ -4,14 +4,20 @@ Created on Sat May 20 11:19:43 2023
 
 @author: Irene
 
-Cifrando Cenit Polar
+Cifrando clave Cenit Polar:
+    
+C  E  N  I  T
+^  ^  ^  ^  ^
+|  |  |  |  |
+V  V  V  V  V
+P  O  L  A  R
 """
 def claveCenitPolar(texto):
     longitud=len(texto) #Calculamos la longitud del texto para recorrerlo
     mensajecifrado = ""
     #print(longitud)
     #print("msj: "+ mensajecifrado)
-    print('HIPOTENUSA')
+    print('CENINT POLAR')
     print("msj entrada: "+texto)
     for i in range (0,longitud): #Bucle para recorrer el texto
         if texto[i] == " ":

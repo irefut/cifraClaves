@@ -3,6 +3,11 @@
 Created on Thu May 18 17:55:02 2023
 
 @author: Irene
+
+Cifrando clave Numérica
+
+Numeramos desde el 1 cada letra del alfabeto, separamos cada letra por un punto(.)
+y un espacio es una diagonal, y el punto(.) por una doble diagonal.
 """
 def claveNumerica(texto):
     longitud=len(texto) #Calculamos la longitud del texto para recorrerlo
@@ -83,3 +88,6 @@ def claveNumerica(texto):
             mensajecifrado = mensajecifrado + texto[i]
     print('msj salida:  '+mensajecifrado+'\n')
     return mensajecifrado
+
+#original = input("Introduce el mensaje para cifrar: ")
+#numi = claveNumerica("L-lBD a, d. \" .ñ.ñ,ñ-ñ\"ñ")

@@ -12,7 +12,7 @@ def claveNeumatico(texto):
     mensajecifrado = ""
     #print(longitud)
     #print("msj: "+ mensajecifrado)
-    print('NEUMATICO')
+    print('NEUMÁTICO')
     print("msj entrada: "+texto)
     for i in range (0,longitud): #Bucle para recorrer el texto
         if texto[i] == " ":
@@ -54,4 +54,3 @@ def claveNeumatico(texto):
 
 #original = input("Introduce el mensaje para cifrar: ")
 #neu = claveNeumatico(original)
-

@@ -5,15 +5,15 @@ Created on Tue May 23 19:57:20 2023
 @author: Irene
 
 Cifrado de clave bailarín
+
+Cambia letra por un muñequito ver:
+    https://es.scribd.com/doc/310011525/Clave-Bailarin#
+    
+El punto(.) sería una diagonal simple
 """
+
 import turtle
 from turtle import Turtle
-
-def cerrar():
-    try:    
-        turtle.bye()   
-    except turtle.Terminator:
-        pass
 
 def claveBailarin(Mensaje):
     
@@ -411,13 +411,7 @@ def claveBailarin(Mensaje):
         draw.back(3)
         draw.pensize(temp)
     
-    def DDiagonal(locx,locy,t):
-        PenGoto((locx,locy),t)
-        t.setheading(90-30)
-        t.forward(44.72*fontSize)
-        PenGoto((locx+14*fontSize,locy),t)
-        t.setheading(90-30)
-        t.forward(44.72*fontSize)
+
     ### este sería el punto    
     def SDiagonal(locx,locy,t):
         PenGoto((locx+8,locy),t)
@@ -496,8 +490,6 @@ def claveBailarin(Mensaje):
             RLegDwn(locx,locy,draw)
         if "prnsArr" in mode:
             LegsUp(locx,locy,draw)
-        if "dobleDiagonal" in mode:
-            DDiagonal(locx,locy,draw)
         if "bandera" in mode:
             Flag(locx,locy,draw)
         if "flecha" in mode:

@@ -195,14 +195,6 @@ for i in Mensaje:
         y -= 60*fontSize
 
 
-
-
-
-
-
-
-
-
 def claveGato(texto):
     mensajecifrado = ""
     mensajecifrado = mensajecifrado + texto + '5'
