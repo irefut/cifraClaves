@@ -1,0 +1,10 @@
+# Archivos que Python genera solo al correr el programa
+__pycache__/
+*.pyc
+
+# Configuración personal de VS Code
+.vscode/
+
+# Ambientes virtuales de Python (por si usamos uno después)
+venv/
+.venv/
