@@ -112,9 +112,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-image: url(:/newPrefix/trebol.png);</string>
-    </property>
     <property name="text">
      <string/>
     </property>
@@ -133,9 +130,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
       <width>51</width>
       <height>51</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-image: url(:/newPrefix/manada.png);</string>
     </property>
     <property name="text">
      <string/>
