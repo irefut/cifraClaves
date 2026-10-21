@@ -25,8 +25,13 @@ CLAVES = {
     "bailarin": claveBailarin,
 }
 
+# Tamaño de la ventanita, en píxeles.
+ANCHO = 710
+ALTO = 620
+
 if __name__ == "__main__":
     nombre = sys.argv[1]
     texto = sys.stdin.buffer.read().decode("utf-8")
+    turtle.setup(width=ANCHO, height=ALTO)
     CLAVES[nombre](texto)
     turtle.mainloop()   # mantiene la ventanita abierta hasta que la cierren
