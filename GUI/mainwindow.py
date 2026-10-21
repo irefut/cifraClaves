@@ -6,7 +6,7 @@ Created on Tue May 16 18:49:45 2023
 Ventana principal del programa
 """
 import sys
-from PyQt5 import uic, QtWidgets
+from PyQt5 import uic, QtWidgets, QtCore
 import turtle
 
 from claves.murcielago import claveMurcielago
@@ -42,6 +42,12 @@ class MyApp(QtWidgets.QMainWindow):
         self.boton_codificar.clicked.connect(self.codificando)
         self.boton_cerrar.clicked.connect(self.cerrando)
         #_______________________________________________________________
+        # Cada 50 ms le damos un turno a la ventanita de turtle para que
+        # se pueda mover, redibujar y cerrar sin trabar la ventana principal
+        self.turtle_ocupado = False
+        self.timer_turtle = QtCore.QTimer(self)
+        self.timer_turtle.timeout.connect(self.atender_turtle)
+        self.timer_turtle.start(50)
         
             
     #Aquí van las funciones      
@@ -52,7 +58,34 @@ class MyApp(QtWidgets.QMainWindow):
         except turtle.Terminator:
             pass
     
-    
+    def atender_turtle(self):
+        # Si turtle ya está ocupado (dibujando o atendiendo la ventanita),
+        # no lo volvemos a llamar encima: eso es lo que la hacía caerse
+        if self.turtle_ocupado:
+            return
+        raiz = turtle._Screen._root   # None si la ventanita no está abierta
+        if raiz is not None:
+            self.turtle_ocupado = True
+            try:
+                raiz.update()
+            except Exception:
+                pass
+            finally:
+                self.turtle_ocupado = False
+
+    def dibujar(self, funcion, orig, nombre):
+        self.turtle_ocupado = True
+        try:
+            try:
+                funcion(orig)
+            except turtle.Terminator:
+                # Si la ventanita se cerró antes, turtle falla una vez
+                # y al segundo intento ya dibuja bien
+                funcion(orig)
+        finally:
+            self.turtle_ocupado = False
+        self.enClave.setText("En clave " + nombre + ", ver ventanita")
+
     def codificando(self):
         orig = self.original.toPlainText()
         if self.rbtn_murcielago.isChecked() == True:
@@ -74,23 +107,18 @@ class MyApp(QtWidgets.QMainWindow):
         elif self.rbtn_parelinofu.isChecked() == True:
             self.enClave.setText(claveParelinofu(orig))
         elif self.rbtn_gato.isChecked() == True:
-            claveGato(orig)
-            self.enClave.setText("En clave gato, ver ventanita")
+            self.dibujar(claveGato, orig, "gato")
         elif self.rbtn_china.isChecked() == True:
-            claveChina(orig)
-            self.enClave.setText("En clave china, ver ventanita")
+            self.dibujar(claveChina, orig, "china")
         elif self.rbtn_morse.isChecked() == True:
             #claveMorseDibujo(orig)
             self.enClave.setText(claveMorseTexto(orig))
         elif self.rbtn_bailarin.isChecked() == True:
-            claveBailarin(orig)
-            self.enClave.setText("En clave bailarín, ver ventanita")
+            self.dibujar(claveBailarin, orig, "bailarín")
         elif self.rbtn_musical.isChecked() == True:
-            claveMusical(orig)
-            self.enClave.setText("En clave musical, ver ventanita")
+            self.dibujar(claveMusical, orig, "musical")
         elif self.rbtn_sietecruces.isChecked() == True:
-            claveSieteCruces(orig)
-            self.enClave.setText("En clave 7 cruces, ver ventanita")
+            self.dibujar(claveSieteCruces, orig, "7 cruces")
         else:#claves que falten de programar
             self.enClave.setText("Aún no la he programado")
         

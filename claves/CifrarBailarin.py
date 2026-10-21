@@ -496,7 +496,8 @@ def claveBailarin(Mensaje):
             Flecha(locx+25,locy+5,draw)
     
     turtle.resetscreen()
-    turtle.hideturtle()
+    for tortuga in turtle.turtles():   # resetscreen vuelve a mostrar
+        tortuga.hideturtle()           # las tortugas viejas: las escondemos
     draw = Turtle()
     InitialiseTurtle(draw)
     
@@ -583,9 +584,7 @@ def claveBailarin(Mensaje):
             y -= 160*fontSize
     #turtle.clearstamps()
     #turtle.done()
-    turtle.Screen._update = False  
-    turtle.Screen.mainloop()
-    turtle.Screen().exitonclick()
+
            
             
 #Mensaje = input("Introduce el mensaje para cifrar: ")

@@ -259,7 +259,8 @@ def claveSieteCruces(Mensaje):
             Seven(tempx,tempy,draw)
     
     turtle.resetscreen()
-    turtle.hideturtle()
+    for tortuga in turtle.turtles():   # resetscreen vuelve a mostrar
+        tortuga.hideturtle()           # las tortugas viejas: las escondemos
     draw = Turtle()
     InitialiseTurtle(draw)
     
@@ -314,9 +315,7 @@ def claveSieteCruces(Mensaje):
             x = -320
             y -= 60*fontSize
             
-    turtle.Screen._update = False  
-    turtle.Screen.mainloop()
-    turtle.Screen().exitonclick()
+
            
             
 #Mensaje = input("Introduce el mensaje para cifrar: ")
