@@ -72,7 +72,7 @@ class MyApp(QtWidgets.QMainWindow):
         self.enClave.setText("En clave " + nombre + ", ver ventanita")
 
     def codificando(self):
-        orig = self.original.toPlainText()
+        orig = self.original.toPlainText().upper()
         if self.rbtn_murcielago.isChecked() == True:
             self.enClave.setText(claveMurcielago(orig))
         elif self.rbtn_inversa.isChecked() == True:
