@@ -6,109 +6,70 @@ Created on Thu Jun  1 14:35:56 2023
 
 Cifra clave morse
 
-Faltaría agregar la clave morse en el turtle.
+Separadores:
+    /      después de cada letra
+    espacio entre palabras
+    //     punto y final del mensaje
 
+Ejemplo: "un gato salvaje" -> ..-/-./   --./.-/-/---/   .../.-/.-../...-/.-/.---/.//
+
+Los signos (, ¿ ? " y otros) se escriben tal cual, como si fueran una
+letra más. El guion (-) se escribe como = para que no se confunda con
+la raya del Morse.
+
+Faltaría agregar la clave morse en el turtle.
 """
+
+MORSE = {
+    "A": ".-",    "B": "-...",  "C": "-.-.",  "D": "-..",   "E": ".",
+    "F": "..-.",  "G": "--.",   "H": "....",  "I": "..",    "J": ".---",
+    "K": "-.-",   "L": ".-..",  "M": "--",    "N": "-.",    "Ñ": "--.--",
+    "O": "---",   "P": ".--.",  "Q": "--.-",  "R": ".-.",   "S": "...",
+    "T": "-",     "U": "..-",   "V": "...-",  "W": ".--",   "X": "-..-",
+    "Y": "-.--",  "Z": "--..",
+    "1": ".----", "2": "..---", "3": "...--", "4": "....-", "5": ".....",
+    "6": "-....", "7": "--...", "8": "---..", "9": "----.", "0": "-----",
+    "-": "=",     # el guion no puede quedar como "-" porque es una raya
+    "/": "\\",    # la diagonal no puede quedar como "/" porque es separador
+}
+
+# Separación entre palabras (3 espacios para que se note bien)
+ESPACIO = "   "
+
+# Las letras con tilde o diéresis se cifran igual que la letra sin tilde
+SIN_TILDE = {"Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U",
+             "Ä": "A", "Ë": "E", "Ï": "I", "Ö": "O", "Ü": "U"}
+
+
 def claveMorseTexto(texto):
-    longitud=len(texto) #Calculamos la longitud del texto para recorrerlo
-    mensajecifrado = ""
-    #print(longitud)
     print('MORSE')
-    print("msj entrada: "+texto)
-    for i in range (0,longitud): #Bucle para recorrer el texto
-        if texto[i] == " ":
-            mensajecifrado = mensajecifrado + "/"
-        elif texto[i] == ",":
-            mensajecifrado = mensajecifrado + ","
-        elif texto[i] == "/":
-            mensajecifrado = mensajecifrado + "\\"
-        elif texto[i] == "\"":
-            mensajecifrado = mensajecifrado + "\""
-        elif texto[i] == "-":
-            mensajecifrado = mensajecifrado + "="
-        elif texto[i] == ".":
-            mensajecifrado = mensajecifrado + "//"
-        elif texto[i] == "¿":
-            mensajecifrado = mensajecifrado + "¿"
-        elif texto[i] == "?":
-            mensajecifrado = mensajecifrado + "?"
-        elif texto[i] == "A" or texto[i] == "Á" or texto[i] == "Ä" or texto[i] == "a" or texto[i] == "á" or texto[i] == "ä":
-            mensajecifrado = mensajecifrado + ".-/"        
-        elif texto[i] == "B" or texto[i] == "b":
-            mensajecifrado = mensajecifrado + "-.../"
-        elif texto[i] == "C" or texto[i] == "c":
-            mensajecifrado = mensajecifrado + "-.-./"
-        elif texto[i] == "D" or texto[i] == "d":
-            mensajecifrado = mensajecifrado + "-../"
-        elif texto[i] == "E" or texto[i] == "É" or texto[i] == "Ë" or texto[i] == "e" or texto[i] == "é" or texto[i] == "ë":
-            mensajecifrado = mensajecifrado + "./"
-        elif texto[i] == "F" or texto[i] == "f":
-            mensajecifrado = mensajecifrado + "..-./"
-        elif texto[i] == "G" or texto[i] == "g":
-            mensajecifrado = mensajecifrado + "--./"
-        elif texto[i] == "H" or texto[i] == "h":
-            mensajecifrado = mensajecifrado + "..../"
-        elif texto[i] == "I" or texto[i] == "Í" or texto[i] == "Ï" or texto[i] == "i" or texto[i] == "í" or texto[i] == "ï":
-            mensajecifrado = mensajecifrado + "../"
-        elif texto[i] == "J" or texto[i] == "j":
-            mensajecifrado = mensajecifrado + ".---/"
-        elif texto[i] == "K" or texto[i] == "k":
-            mensajecifrado = mensajecifrado + "-.-/"
-        elif texto[i] == "L" or texto[i] == "l":
-            mensajecifrado = mensajecifrado + ".-../"
-        elif texto[i] == "M" or texto[i] == "m":
-            mensajecifrado = mensajecifrado + "--/"
-        elif texto[i] == "N" or texto[i] == "n":
-            mensajecifrado = mensajecifrado + "-./"
-        elif texto[i] == "Ñ" or texto[i] == "ñ":
-            mensajecifrado = mensajecifrado + "--.--/"
-        elif texto[i] == "O" or texto[i] == "Ó" or texto[i] == "Ö" or texto[i] == "o" or texto[i] == "ó" or texto[i] == "ö":
-            mensajecifrado = mensajecifrado + "---/"
-        elif texto[i] == "P" or texto[i] == "p":
-            mensajecifrado = mensajecifrado + ".--./"
-        elif texto[i] == "Q" or texto[i] == "q":
-            mensajecifrado = mensajecifrado + "--.-/"
-        elif texto[i] == "R" or texto[i] == "r":
-            mensajecifrado = mensajecifrado + ".-./"
-        elif texto[i] == "S" or texto[i] == "s":
-            mensajecifrado = mensajecifrado + ".../"
-        elif texto[i] == "T" or texto[i] == "t":
-            mensajecifrado = mensajecifrado + "-/"
-        elif texto[i] == "U" or texto[i] == "Ú" or texto[i] == "Ü" or texto[i] == "u" or texto[i] == "ú" or texto[i] == "ü":
-            mensajecifrado = mensajecifrado + "..-/"
-        elif texto[i] == "V" or texto[i] == "v":
-            mensajecifrado = mensajecifrado + "...-/"
-        elif texto[i] == "W" or texto[i] == "w":
-            mensajecifrado = mensajecifrado + ".--/"
-        elif texto[i] == "X" or texto[i] == "x":
-            mensajecifrado = mensajecifrado + "-..-/"
-        elif texto[i] == "Y" or texto[i] == "y":
-            mensajecifrado = mensajecifrado + "-.--/"
-        elif texto[i] == "Z" or texto[i] == "z":
-            mensajecifrado = mensajecifrado + "--../"
-        elif texto[i] == "1":
-            mensajecifrado = mensajecifrado + ".----/"
-        elif texto[i] == "2":
-            mensajecifrado = mensajecifrado + "..---/"
-        elif texto[i] == "3":
-            mensajecifrado = mensajecifrado + "...--/"
-        elif texto[i] == "4":
-            mensajecifrado = mensajecifrado + "....-/"
-        elif texto[i] == "5":
-            mensajecifrado = mensajecifrado + "...../"
-        elif texto[i] == "6":
-            mensajecifrado = mensajecifrado + "-..../"
-        elif texto[i] == "7":
-            mensajecifrado = mensajecifrado + "--.../"
-        elif texto[i] == "8":
-            mensajecifrado = mensajecifrado + "---../"
-        elif texto[i] == "9":
-            mensajecifrado = mensajecifrado + "----./"
-        elif texto[i] == "0":
-            mensajecifrado = mensajecifrado + "-----/"
+    print("msj entrada: " + texto)
+
+    mensajecifrado = ""
+    for letra in texto.upper():
+        letra = SIN_TILDE.get(letra, letra)
+
+        if letra == "\n":
+            # Cambio de línea: se respeta como cambio de línea
+            mensajecifrado = mensajecifrado.rstrip(" ") + "\n"
+        elif letra in " \t":
+            # Fin de palabra: un espacio ancho. Si ya hay uno (dos espacios
+            # seguidos) o estamos al inicio de una línea, no agregamos otro.
+            if mensajecifrado and not mensajecifrado.endswith((" ", "\n")):
+                mensajecifrado = mensajecifrado + ESPACIO
+        elif letra == ".":
+            # Punto: "//"
+            mensajecifrado = mensajecifrado.rstrip("/") + "//"
         else:
-            mensajecifrado = mensajecifrado + texto[i]
-    print('msj salida:  '+mensajecifrado+'\n')
+            # Letra, número o signo: su código (o el signo tal cual) y "/"
+            mensajecifrado = mensajecifrado + MORSE.get(letra, letra) + "/"
+
+    # Final del mensaje: "//"
+    mensajecifrado = mensajecifrado.rstrip(" \n")
+    if mensajecifrado:
+        mensajecifrado = mensajecifrado.rstrip("/") + "//"
+
+    print('msj salida:  ' + mensajecifrado + '\n')
     return mensajecifrado
 
 #original = input("Introduce el mensaje para cifrar: ")
