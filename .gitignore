@@ -8,3 +8,8 @@ __pycache__/
 # Ambientes virtuales de Python (por si usamos uno después)
 venv/
 .venv/
+
+# Archivos que crea PyInstaller
+build/
+dist/
+*.spec

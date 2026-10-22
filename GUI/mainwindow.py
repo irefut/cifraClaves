@@ -25,7 +25,11 @@ from claves.morse import claveMorseTexto#, claveMorseDibujo
 # Carpeta principal del proyecto (la que tiene main.py)
 CARPETA_PROYECTO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-qtCreatorFile = "./GUI/Principal.ui" # Nombre del archivo del QtDesigner
+# Si estamos dentro del ejecutable (.exe), PyInstaller deja los archivos (Principal.ui, imágenes) en sys._MEIPASS
+# si no, están en el proyecto
+CARPETA_ARCHIVOS = getattr(sys, "_MEIPASS", CARPETA_PROYECTO)
+
+qtCreatorFile = os.path.join(CARPETA_ARCHIVOS, "GUI", "Principal.ui") # Nombre del archivo del QtDesigner
 
 class MyApp(QtWidgets.QMainWindow):
     def __init__(self):
@@ -62,8 +66,14 @@ class MyApp(QtWidgets.QMainWindow):
         # Cada dibujo corre en su propio proceso de Python (claves/dibujar.py),
         # así turtle y Qt no comparten ventanas ni se traban entre sí
         self.cerrando()   # si había un dibujo anterior, lo cerramos
+        if getattr(sys, "frozen", False):
+            # Dentro del .exe: el mismo ejecutable sabe dibujar
+            comando = [sys.executable, "--dibujar", clave]
+        else:
+            # Desde VS Code: Python corre main.py en modo dibujo
+            comando = [sys.executable, os.path.join(CARPETA_PROYECTO, "main.py"), "--dibujar", clave]
         self.proceso_dibujo = subprocess.Popen(
-            [sys.executable, "-m", "claves.dibujar", clave],
+            comando,
             stdin=subprocess.PIPE,
             cwd=CARPETA_PROYECTO,
         )
