@@ -10,6 +10,7 @@ y le manda el texto a codificar por la entrada estándar (stdin).
 """
 import sys
 import turtle
+import tkinter
 
 from claves.CifrarGato import claveGato
 from claves.CifrarChina import claveChina
@@ -31,6 +32,11 @@ ALTO = 620
 
 def dibujar_desde_stdin(nombre):
     texto = sys.stdin.buffer.read().decode("utf-8")
-    turtle.setup(width=ANCHO, height=ALTO)
-    CLAVES[nombre](texto)
-    turtle.mainloop()   # mantiene la ventanita abierta hasta que la cierren
+    try:
+        turtle.setup(width=ANCHO, height=ALTO)
+        CLAVES[nombre](texto)
+        turtle.mainloop()   # mantiene la ventanita abierta hasta que la cierren
+    except (turtle.Terminator, tkinter.TclError):
+        # Cerraron la ventanita antes de que terminara de dibujar:
+        # no es un error, simplemente dejamos de dibujar
+        pass
