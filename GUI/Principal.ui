@@ -405,6 +405,33 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 de clave</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="boton_copiar">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>333</y>
+      <width>121</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="toolTip">
+     <string>Copia el texto codificado para pegarlo en otro lado</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(207, 226, 223);
+</string>
+    </property>
+    <property name="text">
+     <string>Copiar</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

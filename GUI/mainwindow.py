@@ -9,7 +9,7 @@ import base64
 import os
 import subprocess
 import sys
-from PyQt5 import uic, QtWidgets
+from PyQt5 import uic, QtCore, QtWidgets
 
 from claves.murcielago import claveMurcielago
 from claves.inversa import claveABC
@@ -44,7 +44,8 @@ class MyApp(QtWidgets.QMainWindow):
         #_______________________________________________________________
         #Aquí van los botones
         self.boton_codificar.clicked.connect(self.codificando)
-        self.boton_cerrar.clicked.connect(self.cerrando)
+        self.boton_cerrar.clicked.connect(self.cerrar_desde_boton)
+        self.boton_copiar.clicked.connect(self.copiando)
         #_______________________________________________________________
 
         self.proceso_dibujo = None   # la ventanita de dibujo abierta, si hay
@@ -52,11 +53,38 @@ class MyApp(QtWidgets.QMainWindow):
             
     #Aquí van las funciones      
     #_______________________________________________________________    
+    def hay_dibujo_abierto(self):
+        # True si la ventanita de dibujo sigue abierta
+        # (poll() devuelve None mientras el proceso del dibujo siga vivo)
+        return self.proceso_dibujo is not None and self.proceso_dibujo.poll() is None
+
     def cerrando(self):
         # Cierra la ventanita del dibujo, si hay una abierta
-        if self.proceso_dibujo is not None and self.proceso_dibujo.poll() is None:
+        if self.hay_dibujo_abierto():
             self.proceso_dibujo.terminate()
         self.proceso_dibujo = None
+
+    def cerrar_desde_boton(self):
+        # El botón "Cerrar ventana de clave": si no hay nada abierto, avisa
+        if self.hay_dibujo_abierto():
+            self.cerrando()
+        else:
+            self.avisar_en_boton(self.boton_cerrar, "¡Nada que\ncerrar!", "Cerrar ventana \nde clave")
+
+    def copiando(self):
+        # Copia el texto codificado al portapapeles, como si fuera Ctrl + C
+        texto = self.enClave.toPlainText()
+        if texto == "" or texto.endswith("ver ventanita"):
+            self.avisar_en_boton(self.boton_copiar, "¡Nada que copiar!", "Copiar")   # las claves dibujadas no tienen texto
+            return
+        QtWidgets.QApplication.clipboard().setText(texto)
+        self.avisar_en_boton(self.boton_copiar, "¡Copiado!", "Copiar")
+
+    def avisar_en_boton(self, boton, aviso, texto_normal):
+        # Muestra un aviso en el botón por 1.5 segundos y luego vuelve
+        # a su texto de siempre (sirve para cualquier botón)
+        boton.setText(aviso)
+        QtCore.QTimer.singleShot(1500, lambda: boton.setText(texto_normal))
 
     def closeEvent(self, event):
         # Al cerrar la ventana principal, cerramos también el dibujo
