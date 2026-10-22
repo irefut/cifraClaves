@@ -19,9 +19,16 @@ if __name__ == "__main__":
         from claves.dibujar import dibujar_desde_stdin
         dibujar_desde_stdin(sys.argv[2])
     else:
-        # Modo normal: la ventana principal
-        from PyQt5 import QtWidgets
+        from PyQt5 import QtCore, QtGui, QtWidgets
         from GUI.mainwindow import MyApp
+
+        # En pantallas con zoom (125 %, 150 %) Qt agranda las letras, pero no las posiciones
+        # fijas de Qt Designer, y todo queda apretado. Con esto Qt agranda todo parejo
+        if hasattr(QtGui.QGuiApplication, "setHighDpiScaleFactorRoundingPolicy"):
+            QtGui.QGuiApplication.setHighDpiScaleFactorRoundingPolicy(
+                QtCore.Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
         app = QtWidgets.QApplication(sys.argv)
         window = MyApp()
