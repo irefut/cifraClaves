@@ -14,7 +14,7 @@ import tkinter
 
 from claves.CifrarGato import claveGato
 from claves.CifrarChina import claveChina
-from claves.CifarSieteCruces import claveSieteCruces
+from claves.CifrarSieteCruces import claveSieteCruces
 from claves.CifrarMusical import claveMusical
 from claves.CifrarBailarin import claveBailarin
 
