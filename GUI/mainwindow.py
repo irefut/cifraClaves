@@ -21,7 +21,7 @@ from claves.hipotenusa import claveHipotenusa
 from claves.neumatico import claveNeumatico
 from claves.parelinofu import claveParelinofu
 #from claves.fonetica import claveFonetica
-from claves.morse import claveMorseTexto#, claveMorseDibujo
+from claves.morse import claveMorseTexto
 
 # Carpeta principal del proyecto (la que tiene main.py)
 CARPETA_PROYECTO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -105,7 +105,7 @@ class MyApp(QtWidgets.QMainWindow):
         elif self.rbtn_china.isChecked() == True:
             self.dibujar("china", orig, "china")
         elif self.rbtn_morse.isChecked() == True:
-            #claveMorseDibujo(orig)
+            self.dibujar("morse", orig, "morse")
             self.enClave.setText(claveMorseTexto(orig))
         elif self.rbtn_bailarin.isChecked() == True:
             self.dibujar("bailarin", orig, "bailarín")

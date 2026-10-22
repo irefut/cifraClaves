@@ -17,6 +17,7 @@ from claves.CifrarChina import claveChina
 from claves.CifrarSieteCruces import claveSieteCruces
 from claves.CifrarMusical import claveMusical
 from claves.CifrarBailarin import claveBailarin
+from claves.CifrarMorse import claveMorseDibujo
 
 CLAVES = {
     "gato": claveGato,
@@ -24,6 +25,7 @@ CLAVES = {
     "sietecruces": claveSieteCruces,
     "musical": claveMusical,
     "bailarin": claveBailarin,
+    "morse": claveMorseDibujo,
 }
 
 # Tamaño de la ventanita, en píxeles.

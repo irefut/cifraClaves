@@ -22,7 +22,7 @@ Se encuentran las siguientes claves:
   - Siete cruces (D)
   - Musical (D)
   - Bailarín (D)
-  - Morse (T)
+  - Morse (T)(D)
 
 Requerimientos técnicos necesarios:
 -PyQt5
