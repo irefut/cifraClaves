@@ -50,7 +50,7 @@ si no está instalado el pyinstaller:
 python -m pip install pyinstaller
 ```
 
-En la misma carpeta raíz del repo:
+Ahora sí, para generar el archivo ejecutable, nos paramos en la misma carpeta raíz del repo:
 ```
 python -m PyInstaller --noconfirm --windowed --name CodificadorScout --icon GUI/scouts.ico --add-data "GUI;GUI" main.py
 ```
@@ -65,6 +65,7 @@ y se abre `CodificadorScout.exe` (no necesita Python instalado)
 main.py              Abre la ventana principal (o, con --dibujar, solo un dibujo)
 GUI/
   mainwindow.py      Lógica de la ventana principal
+  recorte.py         Arma la imagen de una clave dibujada para el botón Copiar
   Principal.ui       Diseño de la ventana (se edita con Qt Designer)
   *.png, *.ico       Logos e ícono
 claves/

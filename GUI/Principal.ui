@@ -422,7 +422,7 @@ de clave</string>
      </font>
     </property>
     <property name="toolTip">
-     <string>Copia el texto codificado para pegarlo en otro lado</string>
+     <string>Copia el texto codificado o la imagen dibujada para pegarlo en otro lado</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(207, 226, 223);

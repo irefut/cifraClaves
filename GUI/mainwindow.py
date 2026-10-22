@@ -9,6 +9,7 @@ import base64
 import os
 import subprocess
 import sys
+import tempfile
 from PyQt5 import uic, QtCore, QtWidgets
 
 from claves.murcielago import claveMurcielago
@@ -22,6 +23,7 @@ from claves.neumatico import claveNeumatico
 from claves.parelinofu import claveParelinofu
 from claves.fonetica import claveFonetica
 from claves.morse import claveMorseTexto
+from GUI.recorte import imagen_del_dibujo
 
 # Carpeta principal del proyecto (la que tiene main.py)
 CARPETA_PROYECTO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,6 +51,8 @@ class MyApp(QtWidgets.QMainWindow):
         #_______________________________________________________________
 
         self.proceso_dibujo = None   # la ventanita de dibujo abierta, si hay
+        self.archivo_dibujo = None   # donde la ventanita guarda lo dibujado (para copiarlo)
+        self.numero_dibujo = 0       # para que cada dibujo use un archivo distinto
         
             
     #Aquí van las funciones      
@@ -72,13 +76,42 @@ class MyApp(QtWidgets.QMainWindow):
             self.avisar_en_boton(self.boton_cerrar, "¡Nada que\ncerrar!", "Cerrar ventana \nde clave")
 
     def copiando(self):
-        # Copia el texto codificado al portapapeles, como si fuera Ctrl + C
+        # Copia al portapapeles, como si fuera Ctrl + C:
+        #  - claves de texto: el texto codificado
+        #  - claves dibujadas: la imagen del dibujo
+        #  - Morse: las dos cosas (al pegar, cada programa usa la que le sirve)
         texto = self.enClave.toPlainText()
-        if texto == "" or texto.endswith("ver ventanita"):
-            self.avisar_en_boton(self.boton_copiar, "¡Nada que copiar!", "Copiar")   # las claves dibujadas no tienen texto
+        if texto.endswith("ver ventanita"):
+            texto = ""   # ese mensaje no es la clave: no se copia
+
+        imagen = None
+        if self.archivo_dibujo:
+            imagen = imagen_del_dibujo(self.archivo_dibujo)
+            if imagen is None and self.hay_dibujo_abierto():
+                # Todavía no ha terminado de dibujar: aún no hay qué recortar
+                self.avisar_en_boton(self.boton_copiar, "¡Aún dibujando!", "Copiar")
+                return
+
+        if texto == "" and imagen is None:
+            self.avisar_en_boton(self.boton_copiar, "¡Nada que copiar!", "Copiar")
             return
-        QtWidgets.QApplication.clipboard().setText(texto)
+
+        datos = QtCore.QMimeData()   # lo que se va a poner en el portapapeles
+        if texto:
+            datos.setText(texto)
+        if imagen is not None:
+            datos.setImageData(imagen)
+        QtWidgets.QApplication.clipboard().setMimeData(datos)
         self.avisar_en_boton(self.boton_copiar, "¡Copiado!", "Copiar")
+
+    def borrar_archivo_dibujo(self):
+        # Borra el archivo temporal del dibujo anterior, si había uno
+        if self.archivo_dibujo and os.path.exists(self.archivo_dibujo):
+            try:
+                os.remove(self.archivo_dibujo)
+            except OSError:
+                pass   # si Windows no lo deja borrar ahora, no pasa nada
+        self.archivo_dibujo = None
 
     def avisar_en_boton(self, boton, aviso, texto_normal):
         # Muestra un aviso en el botón por 1.5 segundos y luego vuelve
@@ -88,7 +121,9 @@ class MyApp(QtWidgets.QMainWindow):
 
     def closeEvent(self, event):
         # Al cerrar la ventana principal, cerramos también el dibujo
+        # y borramos su archivo temporal
         self.cerrando()
+        self.borrar_archivo_dibujo()
         event.accept()
 
     def dibujar(self, clave, orig, nombre):
@@ -98,18 +133,25 @@ class MyApp(QtWidgets.QMainWindow):
         # El texto viaja en base64 (solo letras y números) para que tildes,
         # comillas y cambios de línea no se rompan en el camino
         texto64 = base64.urlsafe_b64encode(orig.encode("utf-8")).decode("ascii")
+        # Archivo temporal donde la ventanita va a guardar lo que dibujó,
+        # para poder copiarlo como imagen (se borra el del dibujo anterior)
+        self.borrar_archivo_dibujo()
+        self.numero_dibujo += 1
+        self.archivo_dibujo = os.path.join(tempfile.gettempdir(),
+                                           "cifraClaves_%d_dibujo%d.json" % (os.getpid(), self.numero_dibujo))
         if getattr(sys, "frozen", False):
             # Dentro del .exe: el mismo ejecutable sabe dibujar
-            comando = [sys.executable, "--dibujar", clave, texto64]
+            comando = [sys.executable, "--dibujar", clave, texto64, self.archivo_dibujo]
         else:
             # Desde VS Code: Python corre main.py en modo dibujo
-            comando = [sys.executable, os.path.join(CARPETA_PROYECTO, "main.py"), "--dibujar", clave, texto64]
+            comando = [sys.executable, os.path.join(CARPETA_PROYECTO, "main.py"), "--dibujar", clave, texto64, self.archivo_dibujo]
         self.proceso_dibujo = subprocess.Popen(comando, cwd=CARPETA_PROYECTO)
         self.enClave.setText("En clave " + nombre + ", ver ventanita")
 
 
     def codificando(self):
-        orig = self.original.toPlainText().upper()
+        orig = self.original.toPlainText().upper()   # todo en mayúscula para que la salida quede pareja
+        self.borrar_archivo_dibujo()   # el dibujo anterior ya no es lo que se va a copiar
         if self.rbtn_murcielago.isChecked() == True:
             self.enClave.setText(claveMurcielago(orig))
         elif self.rbtn_inversa.isChecked() == True:

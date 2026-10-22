@@ -5,12 +5,21 @@ de Qt. Así cada programa de ventanas (Qt y turtle/Tk) tiene su propio
 ciclo de eventos y no se pelean.
 
 La ventana principal (GUI/mainwindow.py) lo ejecuta así:
-    python -m claves.dibujar gato
-y le manda el texto a codificar por la entrada estándar (stdin).
+    python main.py --dibujar gato <texto> <archivo>
+(o CodificadorScout.exe --dibujar gato <texto> <archivo>, en el ejecutable)
+El texto va en base64 para que tildes, comillas y cambios de línea
+viajen sin problemas.
+
+Al terminar de dibujar, guarda en <archivo> la lista de todo lo que se
+dibujó (líneas, rellenos y textos). La ventana principal la usa para
+armar la imagen cuando se toca el botón Copiar (ver GUI/recorte.py).
 """
 import base64
-import turtle
+import json
+import os
 import tkinter
+import tkinter.font
+import turtle
 
 from claves.CifrarGato import claveGato
 from claves.CifrarChina import claveChina
@@ -84,7 +93,57 @@ def bajar_con_rueda(evento):
     turtle.getcanvas().yview_scroll(int(-evento.delta / 120), "units")
 
 
-def dibujar_desde_texto64(nombre, texto64):
+def guardar_trazos(canvas, ruta):
+    """Guarda en el archivo 'ruta' todo lo que quedó dibujado en el lienzo:
+    líneas, figuras rellenas y textos, con su posición, grosor y color."""
+
+    def color(nombre_color):
+        # Pasa un color de Tk ("black", "grey", ...) a formato "#rrggbb"
+        if not nombre_color:
+            return None
+        r, g, b = canvas.winfo_rgb(nombre_color)   # cada uno va de 0 a 65535
+        return "#%02x%02x%02x" % (r // 256, g // 256, b // 256)
+
+    # Cuántos píxeles mide un punto de letra en esta pantalla
+    pixeles_por_punto = float(canvas.tk.call("tk", "scaling"))
+
+    trazos = []
+    for item in canvas.find_all():   # en orden: primero lo que quedó más abajo
+        tipo = canvas.type(item)
+        puntos = canvas.coords(item)
+        if tipo == "line":
+            linea = color(canvas.itemcget(item, "fill"))
+            if linea and puntos:
+                trazos.append({"tipo": "linea", "puntos": puntos,
+                               "ancho": float(canvas.itemcget(item, "width")),
+                               "color": linea})
+        elif tipo == "polygon":
+            relleno = color(canvas.itemcget(item, "fill"))
+            borde = color(canvas.itemcget(item, "outline"))
+            # Las tortugas escondidas son polígonos sin color: esas no van
+            if (relleno or borde) and any(puntos):
+                trazos.append({"tipo": "poligono", "puntos": puntos,
+                               "ancho": float(canvas.itemcget(item, "width")),
+                               "relleno": relleno, "borde": borde})
+        elif tipo == "text":
+            fuente = tkinter.font.Font(root=canvas, font=canvas.itemcget(item, "font")).actual()
+            tamano = fuente["size"]   # positivo: en puntos; negativo: en píxeles
+            pixeles = round(tamano * pixeles_por_punto) if tamano > 0 else -tamano
+            trazos.append({"tipo": "texto", "texto": canvas.itemcget(item, "text"),
+                           "caja": list(canvas.bbox(item)),
+                           "familia": fuente["family"], "pixeles": pixeles,
+                           "negrita": fuente["weight"] == "bold",
+                           "color": color(canvas.itemcget(item, "fill")) or "#000000"})
+
+    # Se escribe primero en otro archivo y luego se renombra, para que la
+    # ventana principal nunca lea un archivo a medio escribir
+    temporal = ruta + ".tmp"
+    with open(temporal, "w", encoding="utf-8") as archivo:
+        json.dump(trazos, archivo)
+    os.replace(temporal, ruta)
+
+
+def dibujar_desde_texto64(nombre, texto64, ruta_trazos=None):
     texto = base64.urlsafe_b64decode(texto64).decode("utf-8")
     try:
         turtle.setup(width=ANCHO, height=ALTO)
@@ -103,6 +162,10 @@ def dibujar_desde_texto64(nombre, texto64):
         # Después de dibujar: el lienzo justo del tamaño del dibujo
         x1, y1, x2, y2 = lienzo.bbox("all")   # y crece hacia abajo
         ajustar_lienzo(y2)
+
+        # Guardar lo dibujado, para poder copiarlo como imagen
+        if ruta_trazos:
+            guardar_trazos(lienzo._canvas, ruta_trazos)
 
         turtle.mainloop()   # mantiene la ventanita abierta hasta que la cierren
     except (turtle.Terminator, tkinter.TclError):
