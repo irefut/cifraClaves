@@ -178,7 +178,17 @@ def claveChina(Mensaje):
             SDiagonal(locx,locy,draw)
         if "flecha" in mode:
             Flecha(locx+25,locy+10,draw)
-    
+
+    # Comillas curvas y letras con diéresis se dibujan como las normales
+    Equivalentes = {"“": '"', "”": '"', "«": '"', "»": '"',
+                    "ä": "a", "ë": "e", "ï": "i", "ö": "o", "ü": "u"}
+
+    def Signo(caracter, locx, locy, t):
+        # Escribe tal cual un signo que esta clave no tiene (¿ ? ¡ ! números...)
+        PenGoto((locx+9, locy+1), t)
+        t.penup()
+        t.write(caracter, align="center", font=("Arial", 20, "bold"))
+
     turtle.resetscreen()
     for tortuga in turtle.turtles():   # resetscreen vuelve a mostrar
         tortuga.hideturtle()           # las tortugas viejas: las escondemos
@@ -198,6 +208,12 @@ def claveChina(Mensaje):
             i = i.lower()
         except:
             None
+        i = Equivalentes.get(i, i)
+        if i == "\n":
+            # Cambio de línea en el mensaje: seguimos en la siguiente fila
+            x = -320
+            y -= 110*fontSize
+            continue
         mode = ""
         if i in ['"']:
             Comillas(x,y,draw)
@@ -231,6 +247,10 @@ def claveChina(Mensaje):
             mode+="fila7"
         if i in ["-"]:
             Guion(x,y,draw)
+            
+        if mode == "" and i not in ' ".,-':
+            # Signo que esta clave no tiene: lo escribimos tal cual
+            Signo(i, x, y, draw)
             
         Square(mode,x,y)
         x += 110*fontSize
