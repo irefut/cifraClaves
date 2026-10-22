@@ -348,6 +348,16 @@ def claveMusical(Mensaje):
             Punto(locx,locy,draw)
         if "sol" in mode:
             SolN(locx,locy,draw)
+
+    # Comillas curvas y letras con diéresis se dibujan como las normales
+    Equivalentes = {"“": '"', "”": '"', "«": '"', "»": '"',
+                    "ä": "a", "ë": "e", "ï": "i", "ö": "o", "ü": "u"}
+
+    def Signo(caracter, locx, locy, t):
+        # Escribe tal cual un signo que esta clave no tiene (¿ ? ¡ ! números...)
+        PenGoto((locx+11, locy+13), t)
+        t.penup()
+        t.write(caracter, align="center", font=("Arial", 16, "bold"))
     
     turtle.resetscreen()
     for tortuga in turtle.turtles():   # resetscreen vuelve a mostrar
@@ -368,6 +378,12 @@ def claveMusical(Mensaje):
             i = i.lower()
         except:
             None
+        i = Equivalentes.get(i, i)
+        if i == "\n":
+            # Cambio de línea en el mensaje: seguimos en la siguiente fila
+            x = -320
+            y -= 160*fontSize
+            continue
         mode = ""
         if i in ['"']:
             Pentagrama(x,y,draw)
@@ -410,7 +426,11 @@ def claveMusical(Mensaje):
         if i in Nueve:
             mode+="nueve"
         
-                       
+        if mode == "" and i not in ' ".,-':
+            # Signo que esta clave no tiene: lo escribimos tal cual
+            Pentagrama(x,y,draw)   # el pentagrama sigue debajo del signo
+            Signo(i, x, y, draw)
+                           
         Square(mode,x,y)
         x += 23
         if x >= 300:
