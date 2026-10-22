@@ -69,6 +69,7 @@ GUI/
   *.png, *.ico       Logos e ícono
 claves/
   dibujar.py         Abre la ventanita de dibujo en un proceso aparte
+  sustitucion.py     Lo que comparten las claves de texto: cada una solo define su tabla
   Cifrar*.py         Claves con dibujo (turtle)
   *.py               Claves de texto
 ```
