@@ -30,22 +30,30 @@ Requerimientos técnicos necesarios:
 ## Instalar
 
 Al trabajar en una PC diferente correr:
->>>python -m pip install -r requerimientos.txt
+```
+python -m pip install -r requerimientos.txt
+```
 
 ## Correr el programa
 
 Desde la raíz del repo corremos:
->>>python main.py
+```
+python main.py
+```
 
 ## Generar ejecutable para Windows
 
 Para empaquetar en ejecutable para Windows correr en terminal:
 
 si no está instalado el pyinstaller:
->>>python -m pip install pyinstaller
+```
+python -m pip install pyinstaller
+```
 
 En la misma carpeta raíz del repo:
->>>python -m PyInstaller --noconfirm --windowed --name CodificadorScout --icon GUI/scouts.ico --add-data "GUI;GUI" main.py
+```
+python -m PyInstaller --noconfirm --windowed --name CodificadorScout --icon GUI/scouts.ico --add-data "GUI;GUI" main.py
+```
 
 El programa queda en `dist/CodificadorScout/`. Para pasarlo a otra compu,
 se comprime **toda esa carpeta** en un .zip; en la otra compu se descomprime
