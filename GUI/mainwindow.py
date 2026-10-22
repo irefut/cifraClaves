@@ -5,6 +5,7 @@ Created on Tue May 16 18:49:45 2023
 
 Ventana principal del programa
 """
+import base64
 import os
 import subprocess
 import sys
@@ -66,20 +67,18 @@ class MyApp(QtWidgets.QMainWindow):
         # Cada dibujo corre en su propio proceso de Python (claves/dibujar.py),
         # así turtle y Qt no comparten ventanas ni se traban entre sí
         self.cerrando()   # si había un dibujo anterior, lo cerramos
+        # El texto viaja en base64 (solo letras y números) para que tildes,
+        # comillas y cambios de línea no se rompan en el camino
+        texto64 = base64.urlsafe_b64encode(orig.encode("utf-8")).decode("ascii")
         if getattr(sys, "frozen", False):
             # Dentro del .exe: el mismo ejecutable sabe dibujar
-            comando = [sys.executable, "--dibujar", clave]
+            comando = [sys.executable, "--dibujar", clave, texto64]
         else:
             # Desde VS Code: Python corre main.py en modo dibujo
-            comando = [sys.executable, os.path.join(CARPETA_PROYECTO, "main.py"), "--dibujar", clave]
-        self.proceso_dibujo = subprocess.Popen(
-            comando,
-            stdin=subprocess.PIPE,
-            cwd=CARPETA_PROYECTO,
-        )
-        self.proceso_dibujo.stdin.write(orig.encode("utf-8"))
-        self.proceso_dibujo.stdin.close()
+            comando = [sys.executable, os.path.join(CARPETA_PROYECTO, "main.py"), "--dibujar", clave, texto64]
+        self.proceso_dibujo = subprocess.Popen(comando, cwd=CARPETA_PROYECTO)
         self.enClave.setText("En clave " + nombre + ", ver ventanita")
+
 
     def codificando(self):
         orig = self.original.toPlainText().upper()

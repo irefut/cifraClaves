@@ -14,10 +14,10 @@ Se puede abrir de dos formas:
 import sys
 
 if __name__ == "__main__":
-    if len(sys.argv) >= 3 and sys.argv[1] == "--dibujar":
+    if len(sys.argv) >= 4 and sys.argv[1] == "--dibujar":
         # Modo dibujo: lo abre la ventana principal para cada clave con dibujo
-        from claves.dibujar import dibujar_desde_stdin
-        dibujar_desde_stdin(sys.argv[2])
+        from claves.dibujar import dibujar_desde_texto64
+        dibujar_desde_texto64(sys.argv[2], sys.argv[3])
     else:
         from PyQt5 import QtCore, QtGui, QtWidgets
         from GUI.mainwindow import MyApp
