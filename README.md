@@ -7,22 +7,22 @@ Tenemos algunas que son de texto(T) y otras de dibujo(D).
 
 Se encuentran las siguientes claves:
 
-  - Murciélago (T)
-  - Abuelito (T)
-  - Hipotenusa (T)
-  - Cenit Polar (T)
-  - Neumático (T)
-  - Parelinofu (T)
-  - Inversa (T)
-  - Malespín (T)
-  - Numérica (T)
-  - Fonética (Aún no) (T)
-  - Gato (D)
-  - China (D)
+  - Murciélago   (T)
+  - Abuelito     (T)
+  - Hipotenusa   (T)
+  - Cenit Polar  (T)
+  - Neumático    (T)
+  - Parelinofu   (T)
+  - Inversa      (T)
+  - Malespín     (T)
+  - Numérica     (T)
+  - Fonética     (T)
+  - Gato         (D)
+  - China        (D)
   - Siete cruces (D)
-  - Musical (D)
-  - Bailarín (D)
-  - Morse (T)(D)
+  - Musical      (D)
+  - Bailarín     (D)
+  - Morse        (T)(D)
 
 Requerimientos técnicos necesarios:
 -PyQt5

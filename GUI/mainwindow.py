@@ -20,7 +20,7 @@ from claves.cenitpolar import claveCenitPolar
 from claves.hipotenusa import claveHipotenusa
 from claves.neumatico import claveNeumatico
 from claves.parelinofu import claveParelinofu
-#from claves.fonetica import claveFonetica
+from claves.fonetica import claveFonetica
 from claves.morse import claveMorseTexto
 
 # Carpeta principal del proyecto (la que tiene main.py)
@@ -100,6 +100,8 @@ class MyApp(QtWidgets.QMainWindow):
             self.enClave.setText(claveNeumatico(orig))
         elif self.rbtn_parelinofu.isChecked() == True:
             self.enClave.setText(claveParelinofu(orig))
+        elif self.rbtn_fonetica.isChecked() == True:
+            self.enClave.setText(claveFonetica(orig))    
         elif self.rbtn_gato.isChecked() == True:
             self.dibujar("gato", orig, "gato")
         elif self.rbtn_china.isChecked() == True:
@@ -115,11 +117,4 @@ class MyApp(QtWidgets.QMainWindow):
             self.dibujar("sietecruces", orig, "7 cruces")
         else:#claves que falten de programar
             self.enClave.setText("Aún no la he programado")
-        
-        '''
-        elif self.rbtn_fonetica.isChecked() == True:
-            self.enClave.setText(claveFonetica(orig))
-        
-        '''
-
     #_______________________________________________________________
