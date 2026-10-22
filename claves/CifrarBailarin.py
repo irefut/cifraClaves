@@ -494,7 +494,17 @@ def claveBailarin(Mensaje):
             Flag(locx,locy,draw)
         if "flecha" in mode:
             Flecha(locx+25,locy+5,draw)
-    
+
+    # Comillas curvas y letras con diéresis se dibujan como las normales
+    Equivalentes = {"“": '"', "”": '"', "«": '"', "»": '"',
+                    "ä": "a", "ë": "e", "ï": "i", "ö": "o", "ü": "u"}
+
+    def Signo(caracter, locx, locy, t):
+        # Escribe tal cual un signo que esta clave no tiene (¿ ? ¡ ! números...)
+        PenGoto((locx-1, locy-9), t)
+        t.penup()
+        t.write(caracter, align="center", font=("Arial", 20, "bold"))
+
     turtle.resetscreen()
     for tortuga in turtle.turtles():   # resetscreen vuelve a mostrar
         tortuga.hideturtle()           # las tortugas viejas: las escondemos
@@ -514,6 +524,12 @@ def claveBailarin(Mensaje):
             i = i.lower()
         except:
             None
+        i = Equivalentes.get(i, i)
+        if i == "\n":
+            # Cambio de línea en el mensaje: seguimos en la siguiente fila
+            x = -320
+            y -= 160*fontSize
+            continue
         mode = ""
         if i in ['"']:
             Comillas(x,y,draw)
@@ -576,7 +592,10 @@ def claveBailarin(Mensaje):
         if i in PrnsArr:
             mode+="prnsArr"
       
-            
+        if mode == "" and i not in ' ".,-':
+            # Signo que esta clave no tiene: lo escribimos tal cual
+            Signo(i, x, y, draw)
+                
         Square(mode,x,y)
         x += 80*fontSize
         if x >= 300:
