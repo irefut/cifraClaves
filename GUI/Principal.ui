@@ -59,8 +59,8 @@ border-color: rgb(0, 0, 0);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+     <string notr="true">background-color: rgb(212, 238, 234);
+font: 12pt &quot;MS Shell Dlg 2&quot;; border: none;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">

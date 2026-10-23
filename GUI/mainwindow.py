@@ -43,6 +43,7 @@ class MyApp(QtWidgets.QMainWindow):
 
         # Load the .ui file
         uic.loadUi(qtCreatorFile, self)
+        self.enClave.setReadOnly(True)
         
         #_______________________________________________________________
         #Aquí van los botones
