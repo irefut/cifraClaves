@@ -52,7 +52,7 @@ python -m pip install pyinstaller
 
 Ahora sí, para generar el archivo ejecutable, nos paramos en la misma carpeta raíz del repo:
 ```
-python -m PyInstaller --noconfirm --windowed --name CodificadorScout --icon GUI/scouts.ico --add-data "GUI;GUI" main.py
+python -m PyInstaller --noconfirm --onefile --windowed --name CodificadorScout --icon GUI/scouts.ico --add-data "GUI;GUI" main.py
 ```
 
 El programa queda en `dist/CodificadorScout/`. Para pasarlo a otra compu,

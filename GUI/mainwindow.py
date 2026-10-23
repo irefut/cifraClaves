@@ -67,7 +67,15 @@ class MyApp(QtWidgets.QMainWindow):
     def cerrando(self):
         # Cierra la ventanita del dibujo, si hay una abierta
         if self.hay_dibujo_abierto():
-            self.proceso_dibujo.terminate()
+            if sys.platform == "win32":
+                # En Windows usamos taskkill con /T para cerrar también los
+                # procesos "hijos": el .exe de un solo archivo abre el dibujo
+                # en un segundo proceso, y terminate() solo cerraría el primero
+                subprocess.run(["taskkill", "/PID", str(self.proceso_dibujo.pid), "/T", "/F"],
+                               capture_output=True,
+                               creationflags=subprocess.CREATE_NO_WINDOW)   # sin ventana negra
+            else:
+                self.proceso_dibujo.terminate()
         self.proceso_dibujo = None
 
     def instrucciones(self):
