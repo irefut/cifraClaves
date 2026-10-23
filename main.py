@@ -4,7 +4,7 @@ Created on Thu May 18 16:28:05 2023
 
 @author: Irene
 
-Versión 3.4
+Versión 3.5
 
 Se puede abrir de dos formas:
     python main.py                    -> abre la ventana principal

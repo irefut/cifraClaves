@@ -1,0 +1,38 @@
+# UTF-8
+#
+# Datos que se ven en Windows al dar clic derecho al .exe -> Propiedades -> Detalles.
+# PyInstaller los agrega con la opción --version-file version_info.txt
+#
+# Para sacar una versión nueva, cambia el número en los CUATRO lugares:
+#   filevers y prodvers  -> (3, 5, 0, 0)   (con comas)
+#   FileVersion y ProductVersion -> '3.5.0.0'   (con puntos)
+
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(3, 5, 0, 0),
+    prodvers=(3, 5, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,        # Windows
+    fileType=0x1,      # aplicación
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo(
+      [
+      StringTable(
+        '140A04B0',    # español (Costa Rica), Unicode
+        [StringStruct('CompanyName', 'Irene M.C.'),
+        StringStruct('FileDescription', 'Codificador de claves Guía y Scout'),
+        StringStruct('FileVersion', '3.5.0.0'),
+        StringStruct('InternalName', 'CodificadorClavesGuiaScout'),
+        StringStruct('LegalCopyright', '© 2026 Irene Muñoz Castro'),
+        StringStruct('OriginalFilename', 'CodificadorClavesGuiaScout.exe'),
+        StringStruct('ProductName', 'Codificador Guía y Scout'),
+        StringStruct('ProductVersion', '3.5.0.0'),
+        StringStruct('Comments', 'Codifica mensajes en claves guías y scouts, algunos en texto y otros en dibujo. Originalmente para el formato usado en Costa Rica, por el grupo 170')])
+      ]),
+    VarFileInfo([VarStruct('Translation', [0x140A, 1200])])
+  ]
+)

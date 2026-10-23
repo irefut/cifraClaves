@@ -52,12 +52,10 @@ python -m pip install pyinstaller
 
 Ahora sí, para generar el archivo ejecutable, nos paramos en la misma carpeta raíz del repo:
 ```
-python -m PyInstaller --noconfirm --onefile --windowed --name CodificadorScout --icon GUI/scouts.ico --add-data "GUI;GUI" main.py
+python -m PyInstaller --noconfirm --onefile --noupx --windowed --name CodificadorClavesGuiaScout --icon GUI/scouts.ico --version-file version_info.txt --add-data "GUI;GUI" main.py
 ```
 
-El programa queda en `dist/CodificadorScout/`. Para pasarlo a otra compu,
-se comprime **toda esa carpeta** en un .zip; en la otra compu se descomprime
-y se abre `CodificadorScout.exe` (no necesita Python instalado)
+El programa queda en `dist/CodificadorScout/`. Para pasarlo a otra compu, se comprime **toda esa carpeta** en un .zip; en la otra compu se descomprime y se abre `CodificadorScout.exe` 
 
 ## Estructura
 
@@ -75,3 +73,11 @@ claves/
   Cifrar*.py         Claves con dibujo (turtle)
   *.py               Claves de texto
 ```
+
+## Cómo se usa
+
+1. Escribe el mensaje en **Texto a codificar**, elige la clave y toca **Codificar**.
+2. Las claves de texto muestran el resultado abajo; las de dibujo abren una ventanita aparte.
+3. **Copiar** copia el resultado: el texto, o la imagen del dibujo en las claves dibujadas.
+   La ventanita de dibujo también tiene su propio botón **Copiar dibujo**.
+4. **Instrucciones** abre una ventanita con la explicación completa.
