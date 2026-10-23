@@ -55,6 +55,12 @@ class MyApp(QtWidgets.QMainWindow):
         self.proceso_dibujo = None   # la ventanita de dibujo abierta, si hay
         self.archivo_dibujo = None   # donde la ventanita guarda lo dibujado (para copiarlo)
         self.numero_dibujo = 0       # para que cada dibujo use un archivo distinto
+
+        # Cada 0.3 s revisamos si la ventanita de dibujo pidió copiar
+        # (su botón "Copiar dibujo" deja un archivo .copiar como pedido)
+        self.timer_pedidos = QtCore.QTimer(self)
+        self.timer_pedidos.timeout.connect(self.revisar_pedido_de_copiar)
+        self.timer_pedidos.start(300)
         
             
     #Aquí van las funciones      
@@ -111,13 +117,32 @@ class MyApp(QtWidgets.QMainWindow):
         QtWidgets.QApplication.clipboard().setMimeData(datos)
         self.avisar_en_boton(self.boton_copiar, "¡Copiado!", "Copiar")
 
+    def revisar_pedido_de_copiar(self):
+        # Si la ventanita dejó el "papelito" pidiendo copiar: copiamos la
+        # imagen del dibujo y botamos el papelito (así la ventanita sabe
+        # que ya se copió y muestra "¡Copiado!")
+        if not self.archivo_dibujo:
+            return
+        pedido = self.archivo_dibujo + ".copiar"
+        if os.path.exists(pedido):
+            imagen = imagen_del_dibujo(self.archivo_dibujo)
+            if imagen is None:
+                return   # no se pudo armar: la ventanita esperará y dirá "No se pudo copiar"
+            QtWidgets.QApplication.clipboard().setImage(imagen)
+            try:
+                os.remove(pedido)
+            except OSError:
+                pass
+
     def borrar_archivo_dibujo(self):
         # Borra el archivo temporal del dibujo anterior, si había uno
-        if self.archivo_dibujo and os.path.exists(self.archivo_dibujo):
-            try:
-                os.remove(self.archivo_dibujo)
-            except OSError:
-                pass   # si Windows no lo deja borrar ahora, no pasa nada
+        if self.archivo_dibujo:
+            for archivo in (self.archivo_dibujo, self.archivo_dibujo + ".copiar"):
+                if os.path.exists(archivo):
+                    try:
+                        os.remove(archivo)
+                    except OSError:
+                        pass   # si Windows no lo deja borrar ahora, no pasa nada
         self.archivo_dibujo = None
 
     def avisar_en_boton(self, boton, aviso, texto_normal):

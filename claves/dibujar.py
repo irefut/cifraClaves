@@ -13,6 +13,12 @@ viajen sin problemas.
 Al terminar de dibujar, guarda en <archivo> la lista de todo lo que se
 dibujó (líneas, rellenos y textos). La ventana principal la usa para
 armar la imagen cuando se toca el botón Copiar (ver GUI/recorte.py).
+
+La ventanita también tiene su propio botón "Copiar dibujo". Como Tk no
+sabe copiar imágenes, ese botón le pide a la ventana principal que copie:
+crea el archivo <archivo>.copiar, la ventana principal lo ve, copia la
+imagen y lo borra; cuando el archivo desaparece, la ventanita sabe que
+ya se copió.
 """
 import base64
 import json
@@ -39,7 +45,7 @@ CLAVES = {
 
 # Tamaño de la ventanita, en píxeles.
 ANCHO = 710
-ALTO = 620
+ALTO = 550
 
 # Para calcular cuánto espacio puede necesitar un mensaje largo
 # (se calcula con la clave que más espacio usa: pocas letras por fila
@@ -143,6 +149,55 @@ def guardar_trazos(canvas, ruta):
     os.replace(temporal, ruta)
 
 
+# Colores, iguales a los de la ventana principal
+CELESTE = "#e9fffc"         # rgb(233, 255, 252): fondo
+VERDE_BOTON = "#cfe2df"     # rgb(207, 226, 223): botones
+
+
+def agregar_boton_copiar(lienzo, ruta_trazos):
+    """Pone el botón "Copiar dibujo" abajo de la ventanita. Empieza
+    desactivado (todavía está dibujando); devuelve la función que lo
+    activa, para llamarla cuando termine el dibujo."""
+    raiz = lienzo._rootwindow          # la ventanita
+    pedido = ruta_trazos + ".copiar"   # el "papelito" que le pide a la ventana principal que copie
+
+    raiz.configure(bg=CELESTE)
+    boton = tkinter.Button(raiz, text="Dibujando...", state="disabled",
+                           font=("Arial", 10, "bold"), bg=VERDE_BOTON,
+                           activebackground=VERDE_BOTON, padx=14, pady=2)
+    boton.pack(side="top", pady=6, before=lienzo)   # abajo, debajo del dibujo
+
+    def volver_a_normal():
+        boton.config(text="~COPIAR DIBUJO~", state="normal", font=("Arial", 11, "bold"))
+
+    def esperar_respuesta(intentos):
+        if not os.path.exists(pedido):
+            # La ventana principal ya copió y botó el papelito
+            boton.config(text="¡Copiado!")
+            raiz.after(1500, volver_a_normal)
+        elif intentos >= 15:
+            # Pasaron 3 segundos y nadie lo atendió (¿cerraron la ventana principal?)
+            try:
+                os.remove(pedido)
+            except OSError:
+                pass
+            boton.config(text="No se pudo copiar")
+            raiz.after(1500, volver_a_normal)
+        else:
+            raiz.after(200, esperar_respuesta, intentos + 1)   # volver a revisar en 0.2 s
+
+    def copiar():
+        open(pedido, "w").close()   # dejar el papelito
+        boton.config(text="Copiando...", state="disabled")
+        raiz.after(200, esperar_respuesta, 1)
+
+    def activar():
+        boton.config(command=copiar)
+        volver_a_normal()
+
+    return activar
+
+
 def dibujar_desde_texto64(nombre, texto64, ruta_trazos=None):
     texto = base64.urlsafe_b64decode(texto64).decode("utf-8")
     try:
@@ -152,6 +207,10 @@ def dibujar_desde_texto64(nombre, texto64, ruta_trazos=None):
         # Cambiamos cómo turtle acomoda el lienzo y agregamos la rueda del mouse
         lienzo._rootwindow.bind("<Configure>", al_cambiar_ventana)
         lienzo._rootwindow.bind("<MouseWheel>", bajar_con_rueda)
+
+        # Botón "Copiar dibujo" (desactivado hasta que termine de dibujar)
+        activar_boton = agregar_boton_copiar(lienzo, ruta_trazos) if ruta_trazos else None
+        lienzo.update()
 
         # Antes de dibujar: un lienzo con espacio de sobra para el mensaje
         filas = len(texto) // LETRAS_POR_FILA + texto.count("\n") + 1
@@ -166,6 +225,7 @@ def dibujar_desde_texto64(nombre, texto64, ruta_trazos=None):
         # Guardar lo dibujado, para poder copiarlo como imagen
         if ruta_trazos:
             guardar_trazos(lienzo._canvas, ruta_trazos)
+            activar_boton()   # ya se puede copiar
 
         turtle.mainloop()   # mantiene la ventanita abierta hasta que la cierren
     except (turtle.Terminator, tkinter.TclError):

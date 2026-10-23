@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Codificador Guía y Scout v3.4</string>
+   <string>Codificador Guía y Scout v3.5</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -400,6 +400,9 @@ font: 12pt &quot;MS Shell Dlg 2&quot;; border: none;</string>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(227, 182, 161);
 </string>
+    </property>
+    <property name="toolTip">
+     <string>Muestra cómo usar el programa</string>
     </property>
     <property name="text">
      <string>Instrucciones</string>
