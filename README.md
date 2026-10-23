@@ -66,6 +66,7 @@ main.py              Abre la ventana principal (o, con --dibujar, solo un dibujo
 GUI/
   mainwindow.py      Lógica de la ventana principal
   recorte.py         Arma la imagen de una clave dibujada para el botón Copiar
+  instrucciones.py   Texto de la ventanita de Instrucciones
   Principal.ui       Diseño de la ventana (se edita con Qt Designer)
   *.png, *.ico       Logos e ícono
 claves/

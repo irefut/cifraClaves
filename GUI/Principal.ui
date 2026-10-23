@@ -380,29 +380,29 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="boton_cerrar">
+   <widget class="QPushButton" name="boton_instrucciones">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>470</x>
       <y>90</y>
-      <width>91</width>
+      <width>111</width>
       <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <weight>75</weight>
+      <bold>true</bold>
+      <underline>true</underline>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(207, 226, 223);
+     <string notr="true">background-color: rgb(227, 182, 161);
 </string>
     </property>
     <property name="text">
-     <string>Cerrar ventana 
-de clave</string>
+     <string>Instrucciones</string>
     </property>
    </widget>
    <widget class="QPushButton" name="boton_copiar">
@@ -417,8 +417,8 @@ de clave</string>
     <property name="font">
      <font>
       <pointsize>10</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="toolTip">

@@ -24,6 +24,7 @@ from claves.parelinofu import claveParelinofu
 from claves.fonetica import claveFonetica
 from claves.morse import claveMorseTexto
 from GUI.recorte import imagen_del_dibujo
+from GUI.instrucciones import mostrar_instrucciones
 
 # Carpeta principal del proyecto (la que tiene main.py)
 CARPETA_PROYECTO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +47,7 @@ class MyApp(QtWidgets.QMainWindow):
         #_______________________________________________________________
         #Aquí van los botones
         self.boton_codificar.clicked.connect(self.codificando)
-        self.boton_cerrar.clicked.connect(self.cerrar_desde_boton)
+        self.boton_instrucciones.clicked.connect(self.instrucciones)
         self.boton_copiar.clicked.connect(self.copiando)
         #_______________________________________________________________
 
@@ -68,12 +69,9 @@ class MyApp(QtWidgets.QMainWindow):
             self.proceso_dibujo.terminate()
         self.proceso_dibujo = None
 
-    def cerrar_desde_boton(self):
-        # El botón "Cerrar ventana de clave": si no hay nada abierto, avisa
-        if self.hay_dibujo_abierto():
-            self.cerrando()
-        else:
-            self.avisar_en_boton(self.boton_cerrar, "¡Nada que\ncerrar!", "Cerrar ventana \nde clave")
+    def instrucciones(self):
+        # El botón "Instrucciones": abre la ventanita con la explicación
+        mostrar_instrucciones(self)
 
     def copiando(self):
         # Copia al portapapeles, como si fuera Ctrl + C:
